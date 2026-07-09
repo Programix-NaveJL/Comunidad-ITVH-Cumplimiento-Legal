@@ -276,16 +276,16 @@
   .info-bar strong { color: var(--gold); font-weight: 600; }
 
   /* LEGAL LINKS */
-  .legal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .legal-item {
     background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
-    padding: 16px 18px; text-decoration: none; display: flex; align-items: center; gap: 12px;
+    padding: 16px 18px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
     transition: border-color 0.15s, background 0.15s, transform 0.15s;
   }
   .legal-item:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-3px); }
   .legal-icon { font-size: 20px; flex-shrink: 0; }
-  .legal-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
-  .legal-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+  .legal-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+  .legal-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; line-height: 1.4; }
 
   /* FINAL CARD */
   .final-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-top: 1rem; overflow: hidden; }
@@ -346,7 +346,15 @@
     .hero p  { font-size: 13.5px; }
     .module-header { padding: 1rem 1.25rem; gap: 10px; }
     .module-body { padding: 1rem 1.25rem 1.2rem calc(1.25rem + 50px); }
-    .principles-grid, .legal-grid, .contact-grid { grid-template-columns: 1fr; }
+    .principles-grid, .contact-grid { grid-template-columns: 1fr; }
+
+    /* Legal: se mantiene en 3 columnas también en mobile, pero compacto */
+    .legal-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .legal-item { padding: 10px 6px; gap: 5px; border-radius: var(--radius); }
+    .legal-icon { font-size: 16px; }
+    .legal-name { font-size: 10.5px; line-height: 1.25; }
+    .legal-desc { font-size: 9px; line-height: 1.3; }
+
     .final-brand { padding: 1rem 1.25rem; }
     .final-body { padding: 1.25rem; }
     .scroll-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
@@ -355,6 +363,8 @@
   @media (max-width: 380px) {
     .brand-name { font-size: 12px; }
     .hero h1 { font-size: 1.2rem; }
+    .legal-name { font-size: 9.5px; }
+    .legal-desc { font-size: 8.5px; }
   }
 </style>
 </head>
@@ -377,7 +387,7 @@
       <a href="#capturas" onclick="closeNav()">Capturas</a>
       <a href="#campus" onclick="closeNav()">Campus</a>
       <a href="#legal" onclick="closeNav()">Legal</a>
-      <a href="https://programix-navejl.github.io/programix-navejl/" target="_blank" rel="noopener noreferrer">Programix NaveJL</a>
+      <a href="https://programix-navejl.github.io/Programix-NaveJL-Pagina-Oficial/" target="_blank" rel="noopener noreferrer">Programix NaveJL</a>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleNav()" aria-label="Menú">
       <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -392,7 +402,7 @@
     <div class="hero-band" aria-hidden="true"></div>
     <div class="hero-body">
       <img src="imagenes/logo_comunidad_itvh.png" alt="Comunidad ITVH" class="hero-logo">
-      <h1>La red social oficial de la comunidad estudiantil del TecNM Villahermosa</h1>
+      <h1>Comunidad ITVH, la red social oficial de la comunidad estudiantil del TecNM Villahermosa</h1>
       <p>Comunidad Tecnológica, Marketplace, Jaguar Chat y UbicaTecNM, todo en una sola app pensada exclusivamente para estudiantes activos del Instituto Tecnológico de Villahermosa.</p>
 
       <div class="hero-actions">
@@ -580,18 +590,25 @@
     <p class="block-subtitle">Términos y privacidad de la plataforma</p>
 
     <div class="legal-grid">
-      <a class="legal-item" href="https://programix-navejl.github.io/comunidad-itvh/terminos.html">
+      <a class="legal-item" href="https://programix-navejl.github.io/Comunidad-ITVH-Cumplimiento-Legal/terminos.html">
         <span class="legal-icon">📄</span>
         <div>
           <div class="legal-name">Términos y Condiciones</div>
           <div class="legal-desc">Reglas de uso de la plataforma</div>
         </div>
       </a>
-      <a class="legal-item" href="https://programix-navejl.github.io/comunidad-itvh/politica.html">
+      <a class="legal-item" href="https://programix-navejl.github.io/Comunidad-ITVH-Cumplimiento-Legal/politica.html">
         <span class="legal-icon">🔒</span>
         <div>
           <div class="legal-name">Política de Privacidad</div>
           <div class="legal-desc">Cómo tratamos tus datos</div>
+        </div>
+      </a>
+      <a class="legal-item" href="https://programix-navejl.github.io/Comunidad-ITVH-Cumplimiento-Legal/estandares.html">
+        <span class="legal-icon">📄</span>
+        <div>
+          <div class="legal-name">Estándares de seguridad infantil</div>
+          <div class="legal-desc">Nuestro compromiso de protección</div>
         </div>
       </a>
     </div>
@@ -624,15 +641,7 @@
         </div>
         <div class="contact-item">
           <div class="c-label">Soporte / Desarrollador</div>
-          <div class="c-val"><a href="https://programix-navejl.github.io/programix-navejl/" target="_blank" rel="noopener noreferrer">programix-navejl.github.io</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="c-label">Correo de contacto</div>
-          <div class="c-val"><a href="mailto:alfredo.naveju.lop@gmail.com">alfredo.naveju.lop@gmail.com</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="c-label">Términos y Condiciones</div>
-          <div class="c-val"><a href="https://programix-navejl.github.io/comunidad-itvh/terminos.html">Ver documento</a></div>
+          <div class="c-val"><a href="https://programix-navejl.github.io/Programix-NaveJL-Pagina-Oficial/" target="_blank" rel="noopener noreferrer">programix-navejl.github.io</a></div>
         </div>
       </div>
 
