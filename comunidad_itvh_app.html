@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comunidad ITVH — La App Oficial de la Comunidad Estudiantil del TecNM Villahermosa</title>
-<meta name="description" content="Comunidad ITVH es la plataforma social oficial para estudiantes del Instituto Tecnológico de Villahermosa: Comunidad Tecnológica, Marketplace, Jaguar Chat y UbicaTecNM, todo en una sola app. Desarrollada por Programix NaveJL.">
+<meta name="description" content="Comunidad ITVH es la plataforma social oficial para estudiantes del Instituto Tecnológico de Villahermosa: Comunidad Tecnológica, Marketplace, Jaguar Chat y UbicaTecNM. Disponible en Google Play y en la web. Desarrollada por Programix NaveJL.">
 <meta property="og:title" content="Comunidad ITVH — La app de la comunidad estudiantil del TecNM Villahermosa">
 <meta property="og:description" content="Una sola app que une a toda la comunidad estudiantil del ITVH: comunidad tecnológica, marketplace, mensajería y mapa del campus.">
 <meta property="og:image" content="imagenes/emuladores_app.png">
@@ -17,24 +17,29 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0f172a;
-    --bg-card: #020617;
-    --bg-card-hover: #0b1327;
-    --text-primary: #e5e7eb;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --border: rgba(56, 189, 248, 0.16);
-    --border-hover: rgba(56, 189, 248, 0.4);
+    --bg: #0a1222;
+    --text-primary: #eef2f7;
+    --text-secondary: #b4c0d2;
+    --text-muted: #8190a8;
     --accent: #38bdf8;
-    --accent-dark: #0284c7;
-    --accent-glow: rgba(56, 189, 248, 0.2);
+    --accent-glow: rgba(56, 189, 248, 0.22);
     --gold: #F5A623;
-    --gold-bg: rgba(245, 166, 35, 0.12);
-    --radius: 10px;
-    --radius-lg: 16px;
-    --note-border: #38bdf8;
+    --gold-bg: rgba(245, 166, 35, 0.14);
+    --radius: 12px;
+    --radius-lg: 22px;
     --font-display: 'Poppins', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+
+    /* Liquid glass */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-bg-strong: rgba(255, 255, 255, 0.10);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-blur: blur(22px) saturate(180%);
+    --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.03) 38%, rgba(255,255,255,0) 60%);
+    --glass-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+      0 12px 32px rgba(2, 6, 23, 0.45);
   }
 
   html { scroll-behavior: smooth; }
@@ -49,99 +54,148 @@
     overflow-x: hidden;
   }
 
+  /* Ambient color field that the glass surfaces refract */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(520px circle at 12% 8%, rgba(56, 189, 248, 0.20), transparent 70%),
+      radial-gradient(620px circle at 88% 22%, rgba(99, 102, 241, 0.16), transparent 70%),
+      radial-gradient(560px circle at 70% 82%, rgba(2, 132, 199, 0.18), transparent 70%),
+      radial-gradient(380px circle at 8% 78%, rgba(245, 166, 35, 0.09), transparent 70%),
+      var(--bg);
+  }
+
   a { color: inherit; }
+
+  /* ── GLASS SURFACES ── */
+  /* Full glass: elements that float or invite interaction */
+  .hero, .store-item {
+    background: var(--glass-sheen), var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Light glass: content surfaces, quieter so the main elements stand out */
+  .intro-card, .showcase, .module-card, .principle-item, .legal-item,
+  .final-card, .contact-item, .note-block {
+    background: rgba(255, 255, 255, 0.04);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 6px 18px rgba(2, 6, 23, 0.25);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .hero, .intro-card, .showcase, .module-card, .principle-item, .legal-item,
+    .store-item, .final-card, .contact-item, .note-block, .topbar {
+      background: #111c33;
+    }
+  }
 
   /* ── TOPBAR ── */
   .topbar {
     position: sticky;
-    top: 0;
+    top: 12px;
     z-index: 100;
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 68px;
+    margin: 12px auto 0;
+    width: calc(100% - 2rem);
+    max-width: 1040px;
+    height: 64px;
+    padding: 0 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    background: var(--glass-sheen), rgba(8, 15, 32, 0.62);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    box-shadow: var(--glass-shadow);
   }
 
   .topbar-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); min-width: 0; }
-  .brand-logo { height: 38px; width: auto; object-fit: contain; flex-shrink: 0; }
-  .brand-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+  .brand-logo { height: 36px; width: auto; object-fit: contain; flex-shrink: 0; }
+  .brand-divider { width: 1px; height: 26px; background: var(--glass-border); flex-shrink: 0; }
   .brand-text { display: flex; flex-direction: column; min-width: 0; }
   .brand-name { font-size: 13px; font-weight: 600; letter-spacing: -0.2px; line-height: 1.2; white-space: nowrap; color: var(--accent); }
   .brand-sub  { font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 1px; white-space: nowrap; }
 
   .topbar-right { display: flex; align-items: center; gap: 8px; }
 
-  .nav-links { display: flex; gap: 26px; }
+  .nav-links { display: flex; gap: 22px; }
   .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-secondary); text-decoration: none; white-space: nowrap; transition: color 0.15s; }
   .nav-links a:hover { color: var(--accent); }
 
   .mobile-menu-btn {
     display: none;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 6px 8px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 7px 9px;
     cursor: pointer;
     color: var(--text-primary);
   }
   .mobile-menu-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; display: block; }
 
   /* ── CONTAINER ── */
-  .page-container { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem 1.5rem; }
+  .page-container { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 1.5rem; }
 
   /* HERO */
-  .hero {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-  }
-  .hero-band {
-    height: 60px;
-    background-color: #071023;
-    background-image:
-      radial-gradient(circle at 10px 12px, rgba(56,189,248,0.28) 0 3px, transparent 3.5px),
-      radial-gradient(circle at 34px 30px, rgba(56,189,248,0.18) 0 2.5px, transparent 3px),
-      radial-gradient(circle at 58px 10px, rgba(56,189,248,0.22) 0 2px, transparent 2.5px),
-      radial-gradient(circle at 80px 34px, rgba(56,189,248,0.16) 0 2.5px, transparent 3px);
-    background-size: 96px 48px;
-  }
+  .hero { border-radius: 28px; margin-bottom: 1.5rem; overflow: hidden; }
+  .hero-band { height: 56px; background: linear-gradient(180deg, rgba(56, 189, 248, 0.18), rgba(56, 189, 248, 0)); }
   .hero-body { padding: 0 2rem 2rem; text-align: center; }
   .hero-logo {
     width: 88px; height: 88px;
     object-fit: contain;
-    border-radius: 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: var(--glass-sheen), rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
     padding: 8px;
-    margin-top: -44px;
-    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
+    margin-top: -28px;
+    box-shadow: var(--glass-shadow), 0 0 32px var(--accent-glow);
   }
   .hero h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; margin: 18px auto 10px; max-width: 620px; }
   .hero p  { font-size: 15px; color: var(--text-secondary); line-height: 1.65; max-width: 540px; margin: 0 auto; }
 
-  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
-  .btn-primary {
-    background: var(--accent); color: #020617;
-    padding: 12px 28px; border-radius: var(--radius);
+  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+  .btn-primary, .btn-glass {
+    padding: 12px 26px; border-radius: 999px;
     font-weight: 600; font-size: 14px;
     text-decoration: none; display: inline-block;
-    transition: background 0.15s, transform 0.1s;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
   }
-  .btn-primary:hover { background: #67cef8; }
-  .btn-primary:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(180deg, #7dd3fc, #38bdf8);
+    color: #04121f;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 24px rgba(56, 189, 248, 0.35);
+  }
+  .btn-primary:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 30px rgba(56, 189, 248, 0.5); }
+  .btn-glass {
+    color: var(--text-primary);
+    background: var(--glass-sheen), var(--glass-bg-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  .btn-glass:hover { background: var(--glass-sheen), rgba(255, 255, 255, 0.16); }
+  .btn-primary:active, .btn-glass:active { transform: scale(0.97); }
 
   .badge-status {
     font-family: var(--font-mono);
     font-size: 12px; font-weight: 600;
     background: var(--gold-bg); color: var(--gold);
-    padding: 7px 14px; border-radius: 20px;
-    border: 1px solid rgba(245, 166, 35, 0.25);
+    padding: 7px 14px; border-radius: 999px;
+    border: 1px solid rgba(245, 166, 35, 0.3);
   }
 
   .hero-meta {
@@ -153,12 +207,10 @@
   }
   .meta-tag { display: inline-flex; align-items: baseline; gap: 5px; }
   .meta-tag .meta-label { font-size: 9.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-  .meta-divider { width: 1px; height: 13px; background: var(--border); }
+  .meta-divider { width: 1px; height: 13px; background: var(--glass-border); }
 
   /* INTRO CARD */
   .intro-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 1.5rem 1.75rem;
     margin-bottom: 1.5rem;
@@ -171,7 +223,7 @@
   .intro-card strong { color: var(--accent); font-weight: 600; }
 
   /* SECTION HEADERS */
-  .section-block { margin: 2.5rem 0 1.5rem; scroll-margin-top: 88px; }
+  .section-block { margin: 2.5rem 0 1.5rem; scroll-margin-top: 96px; }
   .block-eyebrow {
     font-family: var(--font-mono);
     font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
@@ -182,8 +234,6 @@
 
   /* SHOWCASE */
   .showcase {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 2rem 1.5rem;
     display: flex; justify-content: center;
@@ -192,15 +242,13 @@
 
   /* MODULE CARD (funcionalidades) */
   .module-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     margin-bottom: 1rem;
     overflow: hidden;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .module-card:hover { border-color: var(--border-hover); }
-  .module-card.open  { border-color: var(--accent); box-shadow: 0 6px 22px rgba(56, 189, 248, 0.12); }
+  .module-card:hover { border-color: rgba(56, 189, 248, 0.35); }
+  .module-card.open  { border-color: rgba(56, 189, 248, 0.55); }
 
   .module-header {
     display: flex; align-items: center; gap: 14px;
@@ -209,19 +257,20 @@
     background: none; border: none;
     width: 100%; text-align: left;
     color: var(--text-primary);
-    transition: background 0.1s;
+    font-family: inherit;
+    transition: background 0.15s;
   }
-  .module-header:hover { background: var(--bg-card-hover); }
-  .module-card.open .module-header { background: var(--bg-card-hover); }
+  .module-header:hover, .module-card.open .module-header { background: rgba(255, 255, 255, 0.05); }
 
   .module-num {
-    width: 38px; height: 38px;
-    background: #0b1327;
-    border: 1px solid var(--border);
-    border-radius: 9px;
+    width: 40px; height: 40px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 19px;
     flex-shrink: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transition: background 0.15s, border-color 0.15s;
   }
   .module-card.open .module-num { background: var(--accent-glow); border-color: var(--accent); }
@@ -238,70 +287,71 @@
   }
   .module-card.open .chevron { transform: rotate(180deg); stroke: var(--accent); }
 
-  .module-body { display: none; border-top: 1px solid var(--border); padding: 1.1rem 1.5rem 1.4rem calc(1.5rem + 52px); }
+  .module-body { display: none; border-top: 1px solid var(--glass-border); padding: 1.1rem 1.5rem 1.4rem calc(1.5rem + 54px); }
   .module-card.open .module-body { display: block; }
   .module-body p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 0.75rem; }
 
   .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-  .tag { font-size: 12px; padding: 3px 10px; border-radius: var(--radius); background: rgba(56, 189, 248, 0.08); color: var(--accent); border: 1px solid var(--border); }
+  .tag { font-size: 12px; padding: 3px 11px; border-radius: 999px; background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.28); }
 
-  /* PRINCIPLES / CAMPUS GRID */
-  .principles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .principle-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; transition: transform 0.2s, box-shadow 0.2s; }
-  .principle-item:hover { transform: translateY(-4px); box-shadow: 0 8px 18px rgba(56, 189, 248, 0.12); }
+  /* CAMPUS GRID */
+  .principles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .principle-item { border-radius: var(--radius-lg); padding: 16px 18px; transition: transform 0.2s, border-color 0.2s; }
+  .principle-item:hover { transform: translateY(-3px); border-color: rgba(56, 189, 248, 0.45); }
   .principle-icon { font-size: 18px; margin-bottom: 6px; }
   .principle-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
   .principle-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
-  /* NOTE / INFO */
+  /* NOTE */
   .note-block {
-    border-left: 3px solid var(--note-border);
-    background: rgba(56, 189, 248, 0.06);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-left: 3px solid var(--accent);
+    border-radius: 6px var(--radius) var(--radius) 6px;
     padding: 14px 18px; margin-top: 1.5rem;
     font-size: 13px;
   }
   .note-block .p-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
   .note-block p { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
 
-  .info-bar {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    font-size: 13px; color: var(--text-secondary);
-    margin-top: 1.5rem;
+  /* DOWNLOAD */
+  .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .store-item {
+    border-radius: var(--radius-lg);
+    padding: 22px 20px; text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   }
-  .info-bar strong { color: var(--gold); font-weight: 600; }
+  .store-item:hover { border-color: rgba(56, 189, 248, 0.6); transform: translateY(-3px); box-shadow: var(--glass-shadow), 0 0 28px var(--accent-glow); }
+  .store-icon { height: 48px; width: auto; max-width: 100%; object-fit: contain; }
+  .store-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .store-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
 
   /* LEGAL LINKS */
-  .legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .legal-item {
-    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    border-radius: var(--radius-lg);
     padding: 16px 18px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
-    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .legal-item:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-3px); }
+  .legal-item:hover { border-color: rgba(56, 189, 248, 0.6); transform: translateY(-3px); }
   .legal-icon { font-size: 20px; flex-shrink: 0; }
   .legal-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
   .legal-desc { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; line-height: 1.4; }
 
   /* FINAL CARD */
-  .final-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-top: 1rem; overflow: hidden; }
-  .final-brand { display: flex; align-items: center; gap: 14px; padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); background: var(--bg-card-hover); }
+  .final-card { border-radius: 28px; margin-top: 1rem; overflow: hidden; }
+  .final-brand { display: flex; align-items: center; gap: 14px; padding: 1.25rem 2rem; border-bottom: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.04); }
   .final-brand-logo { height: 48px; width: auto; object-fit: contain; flex-shrink: 0; }
   .final-brand-text h2 { font-size: 16px; font-weight: 700; color: var(--accent); }
   .final-brand-text p  { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
   .final-body { padding: 1.5rem 2rem; }
   .final-body > p { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.7; }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1rem; }
-  .contact-item { background: #0b1327; border-radius: var(--radius); padding: 12px 14px; border: 1px solid var(--border); }
+  .contact-item { border-radius: var(--radius); padding: 12px 14px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18); }
   .contact-item .c-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 4px; }
   .contact-item .c-val   { font-size: 13px; color: var(--text-primary); word-break: break-word; }
   .contact-item .c-val a { color: var(--accent); text-decoration: none; }
   .contact-item .c-val a:hover { text-decoration: underline; }
-  .final-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+  .final-divider { height: 1px; background: var(--glass-border); margin: 1.25rem 0; }
   .copyright { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--text-muted); }
   .copyright-logo { height: 22px; width: auto; object-fit: contain; opacity: 0.6; transition: opacity 0.15s; }
   .copyright-logo:hover { opacity: 1; }
@@ -309,30 +359,44 @@
   /* SCROLL TOP */
   .scroll-top {
     position: fixed; bottom: 2rem; right: 2rem;
-    width: 40px; height: 40px;
-    background: var(--accent); border: none; border-radius: 50%;
+    width: 42px; height: 42px;
+    background: var(--glass-sheen), rgba(56, 189, 248, 0.55);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
     transition: opacity 0.2s, transform 0.2s;
     z-index: 50;
-    box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 20px rgba(56, 189, 248, 0.35);
   }
   .scroll-top.show { opacity: 1; pointer-events: auto; }
   .scroll-top:hover { transform: translateY(-2px); }
-  .scroll-top svg { width: 18px; height: 18px; fill: none; stroke: #020617; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .scroll-top svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
   /* FOCUS VISIBLE */
   a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .topbar { padding: 0 1rem; height: 56px; }
+    .topbar { top: 8px; margin-top: 8px; width: calc(100% - 1rem); height: 56px; padding: 0 0.9rem; }
     .brand-sub { display: none; }
     .brand-logo { height: 28px; }
     .mobile-menu-btn { display: flex; }
     .nav-links {
-      position: absolute; top: 56px; left: 0; right: 0;
-      background: var(--bg-card); border-bottom: 1px solid var(--border);
+      position: absolute; top: 64px; left: 0; right: 0;
+      background: var(--glass-sheen), rgba(15, 23, 42, 0.72);
+      -webkit-backdrop-filter: var(--glass-blur);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--glass-shadow);
       flex-direction: column; align-items: flex-start;
       padding: 1rem 1.25rem; gap: 14px;
       display: none;
@@ -346,7 +410,7 @@
     .hero p  { font-size: 13.5px; }
     .module-header { padding: 1rem 1.25rem; gap: 10px; }
     .module-body { padding: 1rem 1.25rem 1.2rem calc(1.25rem + 50px); }
-    .principles-grid, .contact-grid { grid-template-columns: 1fr; }
+    .principles-grid, .contact-grid, .store-grid { grid-template-columns: 1fr; }
 
     /* Legal: se mantiene en 3 columnas también en mobile, pero compacto */
     .legal-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -357,7 +421,7 @@
 
     .final-brand { padding: 1rem 1.25rem; }
     .final-body { padding: 1.25rem; }
-    .scroll-top { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+    .scroll-top { bottom: 1rem; right: 1rem; width: 38px; height: 38px; }
   }
 
   @media (max-width: 380px) {
@@ -383,6 +447,7 @@
 
   <div class="topbar-right">
     <nav class="nav-links" id="navLinks">
+      <a href="#descargar" onclick="closeNav()">Descargar</a>
       <a href="#funciones" onclick="closeNav()">Funciones</a>
       <a href="#capturas" onclick="closeNav()">Capturas</a>
       <a href="#campus" onclick="closeNav()">Campus</a>
@@ -406,8 +471,9 @@
       <p>Comunidad Tecnológica, Marketplace, Jaguar Chat y UbicaTecNM, todo en una sola app pensada exclusivamente para estudiantes activos del Instituto Tecnológico de Villahermosa.</p>
 
       <div class="hero-actions">
-        <a href="#funciones" class="btn-primary">Conoce las funciones</a>
-        <span class="badge-status">🚧 En desarrollo</span>
+        <a href="https://play.google.com/store/apps/details?id=com.programixnavejl.comunidad_tecnm" class="btn-primary" target="_blank" rel="noopener noreferrer">Descargar en Google Play</a>
+        <a href="https://programix-navejl.github.io/Comunidad-ITVH-Proyecto-Web/" class="btn-glass" target="_blank" rel="noopener noreferrer">Abrir versión web (iOS)</a>
+        <span class="badge-status">✅ Disponible</span>
       </div>
 
       <div class="hero-meta">
@@ -427,6 +493,26 @@
     <p><strong>Comunidad ITVH</strong> es la super-app que une a toda la comunidad estudiantil del Instituto Tecnológico de Villahermosa en un solo lugar: red social, mensajería, mapa del campus y un espacio para el emprendimiento estudiantil.</p>
     <p>El registro está reservado exclusivamente a estudiantes activos del ITVH mediante correo electrónico institucional, lo que mantiene a la comunidad cerrada, segura y verificada.</p>
   </div>
+
+  <!-- ══ DESCARGA ══ -->
+  <section class="section-block" id="descargar">
+    <span class="block-eyebrow">Descarga</span>
+    <h2 class="block-title">Disponible ahora</h2>
+    <p class="block-subtitle">Elige la opción según tu dispositivo</p>
+
+    <div class="store-grid">
+      <a class="store-item" href="https://play.google.com/store/apps/details?id=com.programixnavejl.comunidad_tecnm" target="_blank" rel="noopener noreferrer">
+        <img src="imagenes/android.png" alt="" class="store-icon">
+        <span class="store-name">Android</span>
+        <span class="store-desc">Descarga la app desde Google Play.</span>
+      </a>
+      <a class="store-item" href="https://programix-navejl.github.io/Comunidad-ITVH-Proyecto-Web/" target="_blank" rel="noopener noreferrer">
+        <img src="imagenes/ios.png" alt="" class="store-icon">
+        <span class="store-name">iOS</span>
+        <span class="store-desc">Usa la versión web desde tu navegador.</span>
+      </a>
+    </div>
+  </section>
 
   <!-- ══ CAPTURAS ══ -->
   <section class="section-block" id="capturas">
@@ -577,10 +663,6 @@
       <div class="p-label">Acceso exclusivo</div>
       <p>Comunidad ITVH está diseñada exclusivamente para estudiantes activos del Instituto Tecnológico de Villahermosa. El registro requiere un correo electrónico institucional válido.</p>
     </div>
-
-    <div class="info-bar">
-      <strong>🚧 En desarrollo.</strong> Actualmente estamos construyendo Comunidad ITVH. Síguenos en los canales oficiales de Programix NaveJL para enterarte del lanzamiento.
-    </div>
   </section>
 
   <!-- ══ LEGAL ══ -->
@@ -624,7 +706,7 @@
       </div>
     </div>
     <div class="final-body">
-      <p>Comunidad ITVH es desarrollada por <strong>Programix NaveJL</strong> para la comunidad estudiantil del Instituto Tecnológico de Villahermosa. Este sitio se mantendrá actualizado conforme avance el desarrollo de la app.</p>
+      <p>Comunidad ITVH es desarrollada por <strong>Programix NaveJL</strong> para la comunidad estudiantil del Instituto Tecnológico de Villahermosa. Este sitio se mantendrá actualizado conforme evolucione la app.</p>
 
       <div class="contact-grid">
         <div class="contact-item">
@@ -633,7 +715,7 @@
         </div>
         <div class="contact-item">
           <div class="c-label">Estado</div>
-          <div class="c-val">En desarrollo</div>
+          <div class="c-val">Disponible en Android y web</div>
         </div>
         <div class="contact-item">
           <div class="c-label">Desarrollado por</div>
