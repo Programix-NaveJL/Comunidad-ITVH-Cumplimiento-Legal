@@ -1,0 +1,99 @@
+/*
+  Liquid glass ligero para las páginas legales de Comunidad ITVH.
+  Se carga después del <style> de cada página para sobrescribir sus superficies.
+*/
+
+:root {
+  --radius-lg: 18px;
+  --lg-blur: blur(16px) saturate(150%);
+  --lg-bg: rgba(255, 255, 255, 0.04);
+  --lg-bg-hover: rgba(255, 255, 255, 0.06);
+  --lg-border: rgba(255, 255, 255, 0.09);
+  --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 6px 18px rgba(2, 6, 23, 0.25);
+}
+
+/* Campo de color tenue que el vidrio refracta */
+body { background: #0a1222; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(520px circle at 10% 6%, rgba(56, 189, 248, 0.16), transparent 70%),
+    radial-gradient(600px circle at 90% 20%, rgba(99, 102, 241, 0.12), transparent 70%),
+    radial-gradient(540px circle at 70% 85%, rgba(2, 132, 199, 0.14), transparent 70%),
+    #0a1222;
+}
+
+/* Barra superior */
+.topbar {
+  background: rgba(8, 15, 32, 0.60);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Superficies de contenido */
+.hero, .intro-card, .info-bar, .module-card, .final-card,
+.sidebar-footer, .contact-item, .principle-item, .timeline {
+  background: var(--lg-bg);
+  -webkit-backdrop-filter: var(--lg-blur);
+  backdrop-filter: var(--lg-blur);
+  border: 1px solid var(--lg-border);
+  box-shadow: var(--lg-shadow);
+}
+.info-bar { border-left: 3px solid var(--gold); }
+.module-card:hover { border-color: rgba(56, 189, 248, 0.35); }
+.module-card.open  { border-color: rgba(56, 189, 248, 0.55); }
+
+/* Elementos internos: transparentes para que se vea el vidrio */
+.hero-band { background-color: rgba(7, 16, 35, 0.35); }
+.hero-logo { background: rgba(255, 255, 255, 0.06); border-color: var(--lg-border); }
+.section-body { background: transparent; }
+.final-brand { background: rgba(255, 255, 255, 0.04); }
+.module-header:hover,
+.module-card.open .module-header { background: var(--lg-bg-hover); }
+.section-header:hover,
+.section-header.s-open { background: rgba(255, 255, 255, 0.04); }
+.nav-item:hover { background: var(--lg-bg-hover); }
+.module-num, .nav-item .nav-num { background: rgba(255, 255, 255, 0.07); }
+.module-count { background: rgba(255, 255, 255, 0.05); border-color: var(--lg-border); }
+.timeline-step { background: transparent; }
+.timeline-step:last-child { background: var(--allowed-bg); }
+.timeline-dot { background: rgba(255, 255, 255, 0.07); }
+
+/* Botones */
+.btn-pdf {
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(56, 189, 248, 0.25);
+}
+.scroll-top {
+  background: rgba(56, 189, 248, 0.55);
+  -webkit-backdrop-filter: var(--lg-blur);
+  backdrop-filter: var(--lg-blur);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 18px rgba(56, 189, 248, 0.30);
+}
+.scroll-top svg { stroke: #fff; }
+
+/* Menú lateral desplegable en móvil */
+@media (max-width: 900px) {
+  .sidebar {
+    background: rgba(15, 23, 42, 0.70);
+    -webkit-backdrop-filter: var(--lg-blur);
+    backdrop-filter: var(--lg-blur);
+    border-color: var(--lg-border);
+    box-shadow: var(--lg-shadow);
+  }
+}
+
+/* Respaldo para navegadores sin backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .topbar, .hero, .intro-card, .info-bar, .module-card, .final-card,
+  .sidebar-footer, .contact-item, .principle-item, .timeline { background: #111c33; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
